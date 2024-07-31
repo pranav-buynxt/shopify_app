@@ -11,13 +11,13 @@ const cookie = require('cookie');
 const app = express();
 const port = 5000;
 
-const frontendURL = process.env.frontendURL;
+const frontendURL = process.env.ondc_frontendURL;
 // Database configuration
 const dbConfig = {
-    user: process.env.DB_USER,
+    user: process.env.ondc_DB_USER,
     password:"W#BhaGn4Jyr8@oM",
-    server: process.env.DB_SERVER,
-    database: process.env.DB_NAME,
+    server: process.env.ondc_DB_SERVER,
+    database: process.env.ondc_DB_NAME,
     options: {
         encrypt: true, // Use encryption
         trustServerCertificate: true // Allow self-signed certificates
@@ -69,8 +69,8 @@ app.get('/shopify-api', (req, res) => {
     const shopName = req.query.shop;
     if (shopName) {
         const shopState = nonce();
-        const redirectURL = encodeURIComponent(process.env.SHOPIFY_APP_URL + '/shopify-api/callback');
-        const shopifyURL = `https://${shopName}/admin/oauth/authorize?client_id=${process.env.SHOPIFY_API_KEY}&scope=${process.env.SHOPIFY_API_SCOPES}&state=${shopState}&redirect_uri=${redirectURL}`;
+        const redirectURL = encodeURIComponent(process.env.ondc_SHOPIFY_APP_URL + '/shopify-api/callback');
+        const shopifyURL = `https://${shopName}/admin/oauth/authorize?client_id=${process.env.ondc_SHOPIFY_API_KEY}&scope=${process.env.ondc_SHOPIFY_API_SCOPES}&state=${shopState}&redirect_uri=${redirectURL}`;
 
         res.cookie('state', shopState);
         res.redirect(shopifyURL);
@@ -98,7 +98,7 @@ app.get('/shopify-api', (req, res) => {
 
 //         const message = querystring.stringify(queryMap);
 //         const providedHmac = Buffer.from(hmac, 'utf-8');
-//         const generatedHash = Buffer.from(crypto.createHmac('sha256', process.env.SHOPIFY_API_SECRET).update(message).digest('hex'), 'utf-8');
+//         const generatedHash = Buffer.from(crypto.createHmac('sha256', process.env.ondc_SHOPIFY_API_SECRET).update(message).digest('hex'), 'utf-8');
 
 //         let hashEquals = false;
 
@@ -114,8 +114,8 @@ app.get('/shopify-api', (req, res) => {
 
 //         const accessTokenRequestUrl = `https://${shop}/admin/oauth/access_token`;
 //         const accessTokenPayload = {
-//             client_id: process.env.SHOPIFY_API_KEY,
-//             client_secret: process.env.SHOPIFY_API_SECRET,
+//             client_id: process.env.ondc_SHOPIFY_API_KEY,
+//             client_secret: process.env.ondc_SHOPIFY_API_SECRET,
 //             code,
 //         };
 
@@ -158,7 +158,7 @@ app.get('/shopify-api/callback', (req, res) => {
 
         const message = querystring.stringify(queryMap);
         const providedHmac = Buffer.from(hmac, 'utf-8');
-        const generatedHash = Buffer.from(crypto.createHmac('sha256', process.env.SHOPIFY_API_SECRET).update(message).digest('hex'), 'utf-8');
+        const generatedHash = Buffer.from(crypto.createHmac('sha256', process.env.ondc_SHOPIFY_API_SECRET).update(message).digest('hex'), 'utf-8');
 
         let hashEquals = false;
 
@@ -174,8 +174,8 @@ app.get('/shopify-api/callback', (req, res) => {
 
         const accessTokenRequestUrl = `https://${shop}/admin/oauth/access_token`;
         const accessTokenPayload = {
-            client_id: process.env.SHOPIFY_API_KEY,
-            client_secret: process.env.SHOPIFY_API_SECRET,
+            client_id: process.env.ondc_SHOPIFY_API_KEY,
+            client_secret: process.env.ondc_SHOPIFY_API_SECRET,
             code,
         };
 
