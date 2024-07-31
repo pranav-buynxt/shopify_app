@@ -15,7 +15,7 @@ const frontendURL = process.env.ondc_frontendURL;
 // Database configuration
 const dbConfig = {
     user: process.env.ondc_DB_USER,
-    password:"W#BhaGn4Jyr8@oM",
+    password:process.env.ondc_DB_PASSWORD,
     server: process.env.ondc_DB_SERVER,
     database: process.env.ondc_DB_NAME,
     options: {
